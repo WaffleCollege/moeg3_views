@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+<head>
+</head>
+<body>
+    <header>
+      <h1>ミニブログを作ってみよう</h1>
+    </header>
+  <div>
+    <ul>
+      {% for blog in blogs %} <!-- ループさせてそれぞれ要素を取り出す -->
+        <li>タイトル: {{ blog[1] }}, 本文: {{ blog[2] }}, 投稿者: {{ blog[3] }}, 投稿日時: {{ blog[4] }}</li>
+     {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
