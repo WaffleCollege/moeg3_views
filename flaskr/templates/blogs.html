@@ -10,7 +10,7 @@
   <div>
     <ul>
       {% for blog in blogs %} <!-- ループさせてそれぞれ要素を取り出す -->
-        <li>タイトル: {{ blog[1] }}, 本文: {{ blog[2] }}, 投稿者: {{ blog[3] }}, 投稿日時: {{ blog[4] }}</li>
+        <li>タイトル: {{ blog.title }}, 本文: {{ blog.body }}, 投稿者: {{ blog.user_name }}, 投稿日時: {{ blog.created_at }}</li>
      {% endfor %}
     </ul>
   </div>
