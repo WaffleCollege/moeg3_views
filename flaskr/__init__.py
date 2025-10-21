@@ -12,6 +12,9 @@ db = SQLAlchemy()  # ここでインスタンス作成
 def create_app():
     # アプリケーションのインスタンスを作成
     app = Flask(__name__)
+    # 🔑 セッション・flash()・ログイン用に必須
+    app.config['SECRET_KEY'] = 'dev'  # 開発用（本番では安全なランダム文字列に変更）
+    
     # SQLiteのデータベースファイルを指定
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskr.db'
     # SQLAlchemyの設定を無効化
