@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask import db
+from flaskr import db
 
 # models.pyのBlogクラスをインポート
 from flaskr.models import Blog
@@ -50,6 +50,9 @@ def create():
         # DBへ保存
         db.session.add(new_blog)
         db.session.commit()
+
+    # blogs/new.htmlをテンプレートとしてHTMLを組み立てる
+    return render_template('blogs/new.html')
 
 # 詳細ページ URLの末尾にidがつく
 @blog_bp.route('/<int:blog_id>')
