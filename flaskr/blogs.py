@@ -59,3 +59,43 @@ def create():
 def detail(blog_id):
     blog = Blog.query.get_or_404(blog_id)
     return render_template('blogs/detail.html', blog=blog)
+
+@blog_bp.route('/<int:blog_id>/edit', methods=['GET', 'POST'])
+def edit(blog_id):
+    blog = Blog.query.get_or_404(blog_id)
+
+    # 更新処理
+    if request.method == 'POST':
+        # フォームからデータを取得してブログオブジェクトを更新
+        blog.title = request.form.get('title')
+        blog.body = request.form.get('body')
+        blog.user_name = request.form.get('user_name')
+
+        # バリデーションを実行
+        errors = blog.validate()
+        # エラーがあればフォームに戻す
+        if errors:
+            for e in errors:
+                flash(e, 'error')
+            return render_template('blogs/edit.html', blog=blog)
+
+        # DBへ保存
+        db.session.commit()
+        flash('投稿を更新しました！', 'success')
+        # 詳細ページへリダイレクト
+        return redirect(url_for('blogs.detail', blog_id=blog.id))
+
+    return render_template('blogs/edit.html', blog=blog)
+
+# 削除機能
+# /<blog_id>/delete にPOSTリクエストが来たら削除を実行
+@blog_bp.route('/<int:blog_id>/delete', methods=['POST'])
+def delete(blog_id):
+    # blog_idに対応するブログを取得
+    blog = Blog.query.get_or_404(blog_id)
+    # ブログを削除
+    db.session.delete(blog)
+    db.session.commit()
+    flash('投稿を削除しました。', 'success')
+    # 一覧ページへリダイレクト
+    return redirect(url_for('blogs.index'))

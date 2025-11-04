@@ -29,4 +29,4 @@ class Blog(db.Model):
         elif len(self.user_name) > 50:
             errors.append("投稿者名は50文字以内で入力してください。")
 
-        return errors
+        return errors   # エラーがあれば空リストでなくなる
