@@ -10,6 +10,9 @@ class Blog(db.Model):
     user_name = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
+    # コメントとのリレーションシップ back_populatesを使用して双方向に関連付け, cascadeでブログ削除時に関連コメントも削除
+    comments = db.relationship("Comment", back_populates="blog", cascade="all, delete-orphan")
+
     def __repr__(self):
         return f'<Blog {self.title} by {self.user_name}>'
 
@@ -30,3 +33,16 @@ class Blog(db.Model):
             errors.append("投稿者名は50文字以内で入力してください。")
 
         return errors   # エラーがあれば空リストでなくなる
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, nullable=False)
+    user_name = db.Column(db.String(50), nullable=False)
+
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'), nullable=False)  # 外部のテーブルと結びつくためのkey=ForeignKey
+    # Blogとのリレーションシップ back_populatesを使用して双方向に関連付け
+    blog = db.relationship("Blog", back_populates="comments")
+
+    created_at = db.Column(db.DateTime, default=datetime.now)

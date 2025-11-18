@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&family=M+PLUS+1+Code:wght@400;700&display=swap');
+
+body {
+  font-family: "DotGothic16", "M PLUS 1 Code", monospace;
+  background-image: url('retro_background.png');
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #001f0f;
+  color: #c2f0c2;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0 1px 2px #003300;
+}
+
+h1 {
+  font-family: "Press Start 2P", "DotGothic16", monospace;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #00ff66;
+  margin-top: 40px;
+  text-shadow: 0 0 6px #004400;
+}
+
+form {
+  max-width: 500px;
+  margin: 50px auto;
+  background: rgba(0, 40, 0, 0.85);
+  padding: 20px 40px;
+  border: 2px solid #00ff66;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #009944;
+}
+
+input, textarea {
+  width: 100%;
+  background-color: #001f0f;
+  color: #c2f0c2;
+  border: 1px solid #00cc55;
+  padding: 10px;
+  font-family: "DotGothic16", "M PLUS 1 Code", monospace;
+}
+
+button {
+  background-color: #00cc55;
+  color: #001f0f;
+  font-family: "Press Start 2P", "DotGothic16", monospace;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #00ff66;
+  box-shadow: 0 0 10px #00ff66;
+}
+
+a {
+  color: #00ff66;
+  text-decoration: none;
+}
+
+a:hover {
+  text-shadow: 0 0 8px #00ff66;
+}
