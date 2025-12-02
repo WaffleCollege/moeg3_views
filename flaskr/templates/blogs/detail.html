@@ -20,7 +20,7 @@
 
     <h2>コメント</h2>
     {% if blog.comments %}
-        <ul>
+        <ul id="comment-list">
             {% for c in blog.comments %}
             <li>
                 <strong>{{ c.user_name }}</strong> ({{ c.created_at.strftime('%Y-%m-%d %H:%M') }})<br>
