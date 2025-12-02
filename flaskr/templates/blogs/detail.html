@@ -1,6 +1,6 @@
 {% extends "/layout.html" %}
 
-{% block title %}{{ blog.title }}{% endblock %} <!--そのブログのタイトル-->
+{% block title %}{{ blog.title }}{% endblock %}
 {% block h1 %}{{ blog.title }}{% endblock %}
 
 {% block content %}
@@ -44,60 +44,33 @@
     <button type="submit">投稿</button>
     </form>
 
+    <button id="ai-comment-btn" data-blog-id="{{ blog.id }}">
+        AIコメントを追加する
+    </button>
+
+    <script>
+    document.getElementById("ai-comment-btn").addEventListener("click", function() {
+        const blogId = this.dataset.blogId;
+
+        fetch(`/blogs/${blogId}/ai-comment`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())  // .then -> データが返ってきたら
+        .then(data => {
+            if (data.success) { // データ取得が成功したら,trueが返ってきたら
+                const li = document.createElement("li");    // listのインスタンスを作る
+                li.innerHTML = `<strong>${data.user_name}:</strong> ${data.body}`;
+                document.getElementById("comment-list").appendChild(li);
+            } else {
+                alert("コメント追加に失敗しました");
+            }
+        });
+    });
+    </script>
 
     <p><a href="{{ url_for('blogs.index') }}">← 一覧に戻る</a></p>
 {% endblock %}
-
-<!-- <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-    <meta charset="UTF-8">
-    <title>{{ blog.title }}</title>
-</head>
-<body>
-    <h1>{{ blog.title }}</h1>
-    <p>投稿者: {{ blog.user_name }}</p>
-    <p>投稿日: {{ blog.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
-
-    <hr>
-    <p>{{ blog.body }}</p>
-
-     <p>
-        <a href="{{ url_for('blogs.edit', blog_id=blog.id) }}">編集</a>
-    </p>
-
-    <form action="{{ url_for('blogs.delete', blog_id=blog.id) }}" method="post" style="display:inline;">
-        <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
-    </form>
-
-    <h2>コメント</h2>
-    {% if blog.comments %}
-        <ul>
-            {% for c in blog.comments %}
-            <li>
-                <strong>{{ c.user_name }}</strong> ({{ c.created_at.strftime('%Y-%m-%d %H:%M') }})<br>
-                {{ c.body }}
-            </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>まだコメントはありません。</p>
-    {% endif %}
-    <hr>
-
-    <h3>コメントを書く</h3>
-    <form method="POST" action="{{ url_for('blogs.add_comment', blog_id=blog.id) }}">
-    <label>名前：</label><br>
-    <input type="text" name="user_name"><br><br>
-
-    <label>コメント：</label><br>
-    <textarea name="body" rows="4"></textarea><br><br>
-
-    <button type="submit">投稿</button>
-    </form>
-
-
-    <p><a href="{{ url_for('blogs.index') }}">← 一覧に戻る</a></p>
-</body>
-</html> -->

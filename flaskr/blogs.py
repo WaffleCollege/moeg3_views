@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flaskr import db
 # models.pyのBlog,Commentクラスをインポート
 from flaskr.models import Blog, Comment
@@ -109,3 +109,26 @@ def add_comment(blog_id):
 
     flash("コメントを追加しました！")
     return redirect(url_for('blogs.detail', blog_id=blog_id))
+
+# AIコメントのリクエストを受け取って、jsonの形で返す
+@blog_bp.route("/<int:blog_id>/ai-comment", methods=["POST"])
+def ai_comment(blog_id):
+    blog = Blog.query.get_or_404(blog_id)
+
+    # 後に OpenAI API を使う部分、今は固定メッセージ
+    ai_text = "これはAIコメントです。"
+
+    comment = Comment(
+        blog_id=blog.id,
+        user_name="AI Bot",
+        body=ai_text,
+    )
+
+    db.session.add(comment)
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "body": ai_text,
+        "user_name": "AI Bot"
+    })

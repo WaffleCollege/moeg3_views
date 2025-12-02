@@ -3,8 +3,12 @@
 <head>
  <title>{% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+  <script src="{{ url_for('static', filename='js/scripta.js') }}" defer></script>
 </head>
 <body>
+  <div>
+    <input id="picker" type="color">
+  </div>
   <h1>{% block h1 %}{% endblock %}</h1>
    {% with messages = get_flashed_messages() %}
      {% if messages %}
