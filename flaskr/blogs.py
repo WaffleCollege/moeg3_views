@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from flaskr import db
 # models.pyのBlog,Commentクラスをインポート
 from flaskr.models import Blog, Comment
+# AIクライアントをインポート
+from flaskr.ai import client
 
 blog_bp = Blueprint('blogs', __name__, url_prefix='/blogs')
 
@@ -115,8 +117,21 @@ def add_comment(blog_id):
 def ai_comment(blog_id):
     blog = Blog.query.get_or_404(blog_id)
 
-    # 後に OpenAI API を使う部分、今は固定メッセージ
-    ai_text = "これはAIコメントです。"
+    # ---------- Azure OpenAI 呼び出し ----------
+    prompt = f"""
+    次のブログ内容に対して、古風な坂本龍馬が現代に来てプロのエンジニアという設定でコメントを書いてください。
+    ブログタイトル：{blog.title}
+    内容：{blog.body}
+    """
+
+    response = client.responses.create( # client => ai.pyで設定
+        model="gpt-5-nano",
+        input=prompt
+    )
+
+    print(response.output_text) # output_text -> openAIから帰って来るレスポンス
+    ai_text = response.output_text
+    # --------------------------------------------
 
     comment = Comment(
         blog_id=blog.id,

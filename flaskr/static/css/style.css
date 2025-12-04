@@ -2,7 +2,7 @@
 
 body {
   font-family: "DotGothic16", "M PLUS 1 Code", monospace;
-  background-image: url('retro_background.png');
+  /* background-image: url('retro_background.png'); */
   background-size: cover;
   background-attachment: fixed;
   background-color: #001f0f;

@@ -1,10 +1,15 @@
-# アプリを立ち上げる際の初期設定
+# アプリを立ち上げる時に最初に読み込まれる初期設定
 
 from flask import Flask
 # SQLAlchemyをインポート
 from flask_sqlalchemy import SQLAlchemy
 # SQLAlchemyのdeclarative_baseをインポート
 from sqlalchemy.orm import declarative_base
+# dotenvをインポート
+from dotenv import load_dotenv
+
+# 環境変数を設定pythonの関数
+load_dotenv() # .envファイルの内容を環境変数として読み込む
 
 Base = declarative_base()
 db = SQLAlchemy()  # ここでインスタンス作成
