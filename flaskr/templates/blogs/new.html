@@ -24,6 +24,7 @@
         {% endwith %}
 
         <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <p>
                 <label>タイトル:<br>
                     <input type="text" name="title" required>

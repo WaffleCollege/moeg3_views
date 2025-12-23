@@ -7,6 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import declarative_base
 # dotenvをインポート
 from dotenv import load_dotenv
+# セキュリティ
+from flask_wtf.csrf import CSRFProtect
 
 # 環境変数を設定pythonの関数
 load_dotenv() # .envファイルの内容を環境変数として読み込む
@@ -26,6 +28,9 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)  # SQLAlchemyのインスタンスをアプリに紐付け
+
+    # ★ CSRF をアプリ全体に有効化
+    csrf = CSRFProtect(app)
 
     # blueprintの登録
     from . import blogs
